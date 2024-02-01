@@ -1,0 +1,15 @@
+import jwt from "jsonwebtoken";
+const secret=process.env.ACCESS_TOKEN_SECRET
+class tokenService{
+    genrateToken(payload){
+        return jwt.sign(payload,secret,{
+            expiresIn:"5m"
+        });
+    }
+
+    verifyToken(token){
+        return jwt.verify(token,secret);
+    }
+}
+
+export default new tokenService();
