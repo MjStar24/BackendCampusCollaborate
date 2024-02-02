@@ -7,8 +7,8 @@ const projectSchema=new mongoose.Schema({
     skills:[{type:String}],
     urls:[{type:String}],
     duration:{type:String,required:true},
-    isActive:{type:Boolean},
-    projectId:{type:String},
+    isActive:{type:Boolean,default:true},
+    owner:{type:Schema.Types.ObjectId,ref:"User"},
     admin:[{type:Schema.Types.ObjectId,ref:"User"}],
     startedBy:[{type:Schema.Types.ObjectId,ref:"User"}]
 }) 
