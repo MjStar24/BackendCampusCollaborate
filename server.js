@@ -11,7 +11,7 @@ import authRoutes from "./routes/authRoutes.js"
 import userRoutes from "./routes/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js"
 import synergyRoutes from "./routes/synergyRoutes.js";
-
+import CourseReviewRoutes from "./routes/courseReviewRoutes.js";
 
 DbConnect();
 
@@ -31,6 +31,7 @@ app.use("/auth",authRoutes);
 app.use("/user",userRoutes);
 app.use("/project",projectRoutes);
 app.use("/synergy",synergyRoutes);
+app.use("/courseReview",CourseReviewRoutes);
 
 const PORT=4000;
 app.listen(PORT,()=>{
