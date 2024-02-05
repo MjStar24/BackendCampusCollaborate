@@ -7,9 +7,11 @@ const storage=multer.memoryStorage();
 const upload =multer();
 const router=Router();
 
+router.get("/getById",authMiddleWare.isAuthenticated,synergyController.getSynergyById)
+router.get("/getAllSynergy",authMiddleWare.isAuthenticated,synergyController.getSynergy);
 router.post("/create",[upload.array('images',5),authMiddleWare.isAuthenticated],synergyController.createSynergy);
 router.post("/addComments",authMiddleWare.isAuthenticated,synergyController.addComments);
-router.post("/domains",authMiddleWare.isAuthenticated,synergyController.addDomains);
+router.post("/addDomains",authMiddleWare.isAuthenticated,synergyController.addDomains);
 
 
 

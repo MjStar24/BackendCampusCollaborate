@@ -1,6 +1,30 @@
 import imageService from "../services/uploadImage.js";
 import Synergy from "../models/synergyModel.js";
 class synergyController{
+
+    async getSynergyById(req,res){
+        const {id}=req.body;
+        if(!id) res.sendStatus(400);
+        try{
+            const synergy=await Synergy.findById(id);
+            if(!synergy) res.status(404).json({message:"not found"})
+            res.status(200).json(synergy);
+        }catch(e){
+            console.log(e);
+            res.sendStatus(500);
+        }
+    }
+
+    async getSynergy(req,res){
+        try{
+            const synergies=await Synergy.find({});
+            res.status(200).json(synergies);
+        }catch(e){
+            console.log(e);
+            res.sendStatus(500);
+        }
+    }
+
     async createSynergy(req,res){
         let urls=[];
         const data=req.body;

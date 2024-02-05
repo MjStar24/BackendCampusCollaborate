@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import Project from "../models/projectModel.js";
 import CourseReview from "../models/courseReviewModel.js";
+import imageService from "../services/uploadImage.js";
 
 class userController{
     /**
@@ -9,7 +10,69 @@ class userController{
      * @param {object} res -the response object
      */
 
+
+    async getUserById(req,res){
+        const {id}=req.body;
+        if(!id) res.sendStatus(400);
+        try{
+            const user=await user.findOne({_id:id});
+            if(!user) res.sendStatus(404).json({message:"User not found"})
+
+            res.json(user);
+        }catch(e){
+            console.log(e);
+            res.sendStatus(400);
+        }
+    }
+
     async addProfile(req,res){
+        const data=req.body;
+        if(!req.file && !data.skills && !data.courses) res.sendStatus(400);
+        
+
+        try{
+            const user=await User.findById(req.user._id);
+            if(!user) res.status(404).json({"message":"User not found"})
+            if(req.file){
+                const url=req.file.buffer;
+                const filename=req.file.originalname;
+                const uploadedImage=await imageService.uploadImage(url,filename);
+                user.url=uploadedImage.url;
+            }
+            if(data.skills){
+                data.skills.forEach(element => {
+                    const found=user.skills.find(elem=>elem===element);
+                    if(!found) user.skills.push(element);
+                });
+            }
+
+            const updatedUser=await user.save();
+            res.stauts(200).json(updatedUser);
+        }catch(e){
+            console.log(e);
+            res.sendStatus(500);
+        }
+
+    }
+
+
+    async changeDp(req,res){
+        if(!req.file) res.status(500).json({message:"please provide image"});
+        try{
+            const user=User.findById(req.user._id);
+            if(!user) res.status(404).json({message:"user not found"})
+            const url=req.file.buffer;
+            const filename=req.file.originalname;
+            const uploadedImage=await imageService.uploadImage(url,filename);
+            user.url=uploadedImage.url;
+
+            const updatedUser=await user.save();
+            res.stauts(200).json(updatedUser);
+            
+        }catch(e){
+            console.log(e);
+            res.sendStatus(500);
+        }
 
     }
 

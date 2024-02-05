@@ -1,6 +1,16 @@
 import Project from "../models/projectModel.js";
 import User from "../models/userModel.js";
 class projectController{
+
+    async getProject(req,res){
+
+    }
+
+    async getAllProjects(req,res){
+
+    }
+
+
     async createProject(req,res){
         const data=req.body;
         if(!data.projectName && !data.duration) res.sendStatus(400);
