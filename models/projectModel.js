@@ -10,7 +10,7 @@ const projectSchema=new mongoose.Schema({
     isActive:{type:Boolean,default:true},
     owner:{type:Schema.Types.ObjectId,ref:"User"},
     admin:[{type:Schema.Types.ObjectId,ref:"User"}],
-    startedBy:[{type:Schema.Types.ObjectId,ref:"User"}]
+    starBy:[{type:Schema.Types.ObjectId,ref:"User"}]
 }) 
 
 const Project=mongoose.model("Project",projectSchema);

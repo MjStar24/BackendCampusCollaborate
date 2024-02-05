@@ -4,13 +4,14 @@ class authMiddleWare{
     async isAuthenticated(req,res,next){
         try{
             const {accessToken}=req.cookies;
-            if(!accessToken) res.status(401).json({message:"Access denied"});
+            if(!accessToken) res.status(401).json({message:"Access denied no token"});
             const {id}=tokenService.verifyToken(accessToken);
             if(!id) res.status(401).json({message:"Access denied"});
             const user=await User.findById(id);
             req.user=user;
             next();
         }catch(e){
+            console.log(e.message)
             res.status(401).json({message:'Invalid Token'});
         }
     }

@@ -10,15 +10,16 @@ import authMiddleWare from "./middleware/authMiddleWare.js";
 import authRoutes from "./routes/authRoutes.js"
 import userRoutes from "./routes/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js"
+import synergyRoutes from "./routes/synergyRoutes.js";
 
 
 DbConnect();
 
 const app=express();
 
-
-app.use(cors());
 app.use(cookieParser());
+app.use(express.json());
+app.use(cors());
 
 
 //just for redirecting
@@ -29,6 +30,7 @@ app.get("/",authMiddleWare.isAuthenticated,(req,res)=>{
 app.use("/auth",authRoutes);
 app.use("/user",userRoutes);
 app.use("/project",projectRoutes);
+app.use("/synergy",synergyRoutes);
 
 const PORT=4000;
 app.listen(PORT,()=>{
