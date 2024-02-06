@@ -33,7 +33,7 @@ app.use("/project",projectRoutes);
 app.use("/synergy",synergyRoutes);
 app.use("/courseReview",CourseReviewRoutes);
 
-const PORT=4000;
+const PORT=proecrss.env.PORT || 5000;
 app.listen(PORT,()=>{
     console.log(`server running on port ${PORT}`);
 })
