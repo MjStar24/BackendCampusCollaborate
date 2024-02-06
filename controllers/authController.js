@@ -13,7 +13,7 @@ class AuthController{
                 client_id:process.env.CLIENT_ID,
                 // client_secret:CLIENT_SECRET,
                 grant_type:"authorization_code",
-                redirect_uri:"https://campuscollaborate-server.onrender.com/",
+                redirect_uri:"https://campuscollaborate-server.onrender.com/auth/getCred",
                 scope:"user.read",
                 code,
             }
