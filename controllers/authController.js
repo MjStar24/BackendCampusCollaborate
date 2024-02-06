@@ -13,7 +13,7 @@ class AuthController{
                 client_id:process.env.CLIENT_ID,
                 // client_secret:CLIENT_SECRET,
                 grant_type:"authorization_code",
-                redirect_uri:"http://localhost:4000/auth/getCred",
+                redirect_uri:"https://campuscollaborate-server.onrender.com/",
                 scope:"user.read",
                 code,
             }
@@ -74,7 +74,7 @@ class AuthController{
             
             const userDetails=await User.findById(id);
            
-            res.redirect("http://localhost:4000/")
+            res.redirect("https://campuscollaborate-server.onrender.com/")
         }catch(e){
             console.log(e);
             res.sendStatus(500).json({message:"server error"});
