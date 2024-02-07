@@ -6,7 +6,10 @@ class synergyController{
         const {id}=req.body;
         if(!id) res.sendStatus(400);
         try{
-            const synergy=await Synergy.findById(id);
+            const synergy=await Synergy.findById(id).select("-_id -__v").populate({
+                path:'user',
+                select:"name program -_id"
+            });
             if(!synergy) res.status(404).json({message:"not found"})
             res.status(200).json(synergy);
         }catch(e){
@@ -17,7 +20,10 @@ class synergyController{
 
     async getSynergy(req,res){
         try{
-            const synergies=await Synergy.find({});
+            const synergies=await Synergy.find({}).select("-_id -__v").populate({
+                path:'user',
+                select:"name program -_id"
+            });
             res.status(200).json(synergies);
         }catch(e){
             console.log(e);

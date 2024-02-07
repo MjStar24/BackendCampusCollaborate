@@ -3,7 +3,7 @@ import User from "./userModel.js";
 
 
 const adminModel=new mongoose.Schema({
-    userId:{type:Schema.Types.ObjectId,ref:"User"},
+    id:{type:Schema.Types.ObjectId,ref:"User"},
     name:{type:String,required:true},
     url:{type:String}
 },{_id:false})
