@@ -3,6 +3,7 @@ import "dotenv/config"
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
 
 import DbConnect from "./services/dbConnection.js";
 import authMiddleWare from "./middleware/authMiddleWare.js";
@@ -12,6 +13,8 @@ import userRoutes from "./routes/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js"
 import synergyRoutes from "./routes/synergyRoutes.js";
 import CourseReviewRoutes from "./routes/courseReviewRoutes.js";
+import Cloudinary from "./services/uploadDocument.js"
+Cloudinary.cloudinaryConnect();
 
 DbConnect();
 
@@ -20,6 +23,10 @@ const app=express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
+}));
 
 
 //just for redirecting

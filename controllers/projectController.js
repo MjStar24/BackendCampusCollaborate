@@ -1,5 +1,16 @@
 import Project from "../models/projectModel.js";
 import User from "../models/userModel.js";
+import { v2 as cloudinary } from 'cloudinary';
+
+function isFileTypeSupported(type,supported){
+    return supported.includes(type);
+}
+
+async function uploadFileToCloudinary (file,folder) {
+    const option = {folder};
+    return await cloudinary.uploader.upload(file.tempFilePath,option);
+}
+
 class projectController{
 
     async getProject(req,res){
@@ -15,13 +26,25 @@ class projectController{
         const data=req.body;
         if(!data.projectName && !data.duration) res.sendStatus(400);
         try{
+            const file = req.files.file;
+            const supportedTypes = ["pdf","docx"];
+            const fileType = file.name.split('.')[1].toLowerCase();
+            if(!isFileTypeSupported(fileType,supportedTypes)){
+                return res.json({
+                    success:false,
+                    message:'file format not matched',
+                })
+            }
+            const response = await uploadFileToCloudinary(file,"kriti");
+
             const projectData={
                 projectName:data.projectName,
                 description:data.description,
                 skills:data.skills,
                 urls:data.urls,
-                owner:req.user._id,
-                duration:data.duration
+                // owner:req.user._id,
+                duration:data.duration,
+                documentUrl:response.secure_url,
             }
 
             const project = new Project(projectData);
@@ -69,8 +92,8 @@ class projectController{
             res.sendStatus(500);
         }
     }
-
-
+    
+    
 }
 
 export default new projectController();

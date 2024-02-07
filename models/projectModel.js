@@ -14,6 +14,7 @@ const projectSchema=new mongoose.Schema({
     skills:[{type:String}],
     urls:[{type:String}],
     duration:{type:String,required:true},
+    documentUrl: { type: String },
     isActive:{type:Boolean,default:true},
     owner:{type:Schema.Types.ObjectId,ref:"User"},
     admin:[adminModel],
