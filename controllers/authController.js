@@ -14,6 +14,7 @@ class AuthController{
                 // client_secret:CLIENT_SECRET,
                 grant_type:"authorization_code",
                 redirect_uri:"https://campuscollaborate-server.onrender.com/auth/getCred",
+                // redirect_uri:"http://localhost:4000/auth/getCred",
                 scope:"user.read",
                 code,
             }
@@ -74,7 +75,7 @@ class AuthController{
             
             const userDetails=await User.findById(id);
            
-            res.redirect("https://campuscollaborate-server.onrender.com/")
+            res.redirect(`campuscollaborate://success?token=${token}`)
         }catch(e){
             console.log(e);
             res.sendStatus(500).json({message:"server error"});
