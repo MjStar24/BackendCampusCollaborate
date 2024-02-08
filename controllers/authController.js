@@ -61,7 +61,7 @@ class AuthController{
                 id:existingUser._id
             })
     
-            // console.log("token",token);
+            console.log("token",token);
     
             // console.log(updateduser);
     
@@ -75,7 +75,7 @@ class AuthController{
             
             const userDetails=await User.findById(id);
            
-            res.redirect(`campuscollaborate://success?token=${token}&user=${existingUser}`);
+            res.redirect(`https://campuscollaborate-server.onrender.com/`);
             // res.redirect(`http://localhost:4000/?token=${token}&user=${existingUser}`)
         }catch(e){
             console.log(e);
