@@ -10,19 +10,38 @@ class userController{
      * @param {object} res -the response object
      */
 
+    async getUser(req,res){
+        const name=req.params.name;
+        if(!name) res.sendStatus(400);
+        try{
+            const user=await User.findOne({
+                name:{$regex : name , $options : "i"}
+            }).select("name url program -_id")
+            if(!user) res.sendStatus(404);
+            else res.status(200).json(user);
+        }catch(e){
+            console.log(e);
+            res.sendStatus(500);
+        }
+
+    }
 
     async getUserById(req,res){
         const {id}=req.body;
-        if(!id) res.sendStatus(400);
         try{
-            const user=await user.findOne({_id:id});
-            if(!user) res.sendStatus(404).json({message:"User not found"})
-
-            res.json(user);
+            if(id){
+                const user=await User.findOne({_id:id});
+                if(!user) res.sendStatus(404).json({message:"User not found"})
+                else res.json(user);
+            }
+            else{
+                res.status(200).json(req.user);
+            }
         }catch(e){
             console.log(e);
-            res.sendStatus(400);
+            res.sendStatus(500);
         }
+        
     }
 
     async addProfile(req,res){
