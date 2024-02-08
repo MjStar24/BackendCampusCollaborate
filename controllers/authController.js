@@ -75,7 +75,7 @@ class AuthController{
             
             const userDetails=await User.findById(id);
            
-            res.redirect(`campuscollaborate://success?token=${token}`)
+            res.redirect(`campuscollaborate://success?token=${token}&user=${existingUser}`);
         }catch(e){
             console.log(e);
             res.sendStatus(500).json({message:"server error"});
