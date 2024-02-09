@@ -17,7 +17,7 @@ class userController{
         try{
             const user=await User.findOne({
                 name:{$regex : name , $options : "i"}
-            }).select("name url program -_id")
+            }).select("name url program _id")
             if(!user) res.sendStatus(404);
             else res.status(200).json(user);
         }catch(e){
