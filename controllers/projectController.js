@@ -52,10 +52,11 @@ class projectController{
     }
 
     async addThumbnail(req,res){
-        if(!req.body.id || !req.file) res.status(500).json({message:"please provide image"});
-        console.log(req.body)
+        if(!req.body || !req.file) res.status(500).json({message:"please provide image"});
+        const data=JSON.parse(JSON.stringify(req.body))
+        const {id}=data;
         try{
-            const project=await Project.findById(req.body.id);
+            const project=await Project.findById(id);
             if(!project) res.status(404).json({message:"user not found"})
             else{
                 const thumbnail=req.file.buffer;
