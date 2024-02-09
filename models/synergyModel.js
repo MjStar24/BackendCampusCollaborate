@@ -2,14 +2,16 @@ import mongoose, { Schema } from "mongoose";
 
 
 const commentsModel=new mongoose.Schema({
-    user:{type:Schema.Types.ObjectId,ref:"User"},
-    comment:{type:String,default:""}
+    id:{type:Schema.Types.ObjectId,ref:'User'},
+    name:{type:String},
+    url:{type:String},
+    comment:{type:String}
 },{_id:false})
 
 const synergySchema=new mongoose.Schema({
-    user:{type:Schema.Types.ObjectId,ref:"User"},
+    user:commentsModel,
     title:{type:String,required:true},
-    image:[{type:String}],
+    images:[{type:String}],
     description:{type:String,default:""},
     domains:[{type:String}],
     comments:[commentsModel]

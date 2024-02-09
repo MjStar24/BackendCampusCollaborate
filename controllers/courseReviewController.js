@@ -11,9 +11,8 @@ class courseReviewController{
                 const course=await courseReviewModel.findOne({
                     $or:[
                         {courseName:{$regex : name , $options : "i"}},
-                        {courseCode:{$regex : name , $options : "i"}}
                     ]
-                }).select("-_id -__v")
+                }).select("-__v")
                 if(!course) res.sendStatus(404);
                 else res.status(200).json(course);
             }catch(e){
@@ -37,7 +36,7 @@ class courseReviewController{
 
     async getReviews(req,res){
         try{
-            const courses=await courseReviewModel.find({}).select("-_id -__v");
+            const courses=await courseReviewModel.find({}).select("-__v");
             if(courses.length==0) res.sendStatus(404);
             else res.status(200).json(courses);
         }catch(e){
@@ -50,15 +49,14 @@ class courseReviewController{
   
     async addCourseReview(req,res){
         const data =req.body;
-        if (!data.courseName && !data.courseCode) res.sendStatus(400)
+        if (!data.courseName && !data.title) res.sendStatus(400)
         try {
         const courseReviewData={
-            courseCode:data.courseCode,
+            postedBy:req.user._id,
             courseName:data.courseName,
             professor:data.professor,
             description:data.description,
-            rating:data.rating,
-            
+            title:data.title
         }
         const courseReview=new courseReviewModel(courseReviewData);
         const newCourseReview=await courseReview.save();
@@ -71,13 +69,16 @@ class courseReviewController{
     }
 
     async addComments(req,res){
+        console.log(req.user.name);
         const data=req.body
         if (!data.id || !data.comment ) res.sendStatus(400);
         try {
             const courseReview = await courseReviewModel.findById(data.id);
             if (!courseReview )res.sendStatus(404).json({"errorMessage":"Course Review doesn't exist"})
             courseReview.comments.push({
-                user:user.req.user._id,
+                id:req.user._id,
+                name:req.user.name,
+                url:req.user.url,
                 comment:data.comment
             })
             const updatedCourseReview=await courseReview.save();

@@ -8,7 +8,7 @@ class synergyController{
             try{
                 const synergy=await Synergy.findOne({
                     title:{$regex : name , $options : "i"}
-                }).select("-_id -__v")
+                }).select("-__v")
                 if(!synergy) res.sendStatus(404);
                 else res.status(200).json(synergy);
             }catch(e){
@@ -21,10 +21,7 @@ class synergyController{
         const {id}=req.body;
         if(!id) res.sendStatus(400);
         try{
-            const synergy=await Synergy.findById(id).select("-_id -__v").populate({
-                path:'user',
-                select:"name program -_id"
-            });
+            const synergy=await Synergy.findById(id).select("-__v")
             if(!synergy) res.status(404).json({message:"not found"})
             res.status(200).json(synergy);
         }catch(e){
@@ -35,9 +32,9 @@ class synergyController{
 
     async getSynergy(req,res){
         try{
-            const synergies=await Synergy.find({}).select("-_id -__v").populate({
+            const synergies=await Synergy.find({}).select("-__v").populate({
                 path:'user',
-                select:"name program -_id"
+                select:"name program"
             });
             res.status(200).json(synergies);
         }catch(e){
@@ -47,29 +44,48 @@ class synergyController{
     }
 
     async createSynergy(req,res){
-        let urls=[];
         const data=req.body;
 
         try{
             if(!data.title || !data.description || !data.domains) res.sendStatus(400);
-            for(const file of req.files){
-                const url=file.buffer;
-                const filename=file.originalname;
-                const uploadedImage=await imageService.uploadImage(url,filename);
-                urls.push(uploadedImage.url);
-            }
-
-            const synergy=new Synergy({
-                user:req.user._id,
+        
+                const synergy=new Synergy({
+                user:{
+                    id:req.user._id,
+                    name:req.user.name,
+                    url:req.user.url
+                },
                 title:data.title,
                 description:data.description,
-                image:urls,
                 domains:data.domains,
+
             })
 
             const updatedSynergy=await synergy.save();
             
 
+            res.status(200).json(updatedSynergy);
+        }catch(e){
+            console.log(e);
+            res.sendStatus(500);
+        }
+    }
+
+    async addImages(req,res){
+        console.log(req.files);
+        const {id}=req.body;
+        if(!id) res.sendStatus(400);
+        try{
+            const synergy=await Synergy.findById(id);
+            if(!synergy) res.sendStatus(404)
+            for(const file of req.files){
+                const url=file.buffer;
+                const filename=file.originalname;
+                const uploadedImage=await imageService.uploadImage(url,filename);
+                synergy.images.push(uploadedImage.url);
+            }
+
+            const updatedSynergy=await synergy.save();
             res.status(200).json(updatedSynergy);
         }catch(e){
             console.log(e);
@@ -84,10 +100,14 @@ class synergyController{
         try{
             const synergy = await Synergy.findById(data.id);
             if(!synergy) res.sendStatus(404).json({message : "not found"})
-            synergy.comments.push({
-            user:req.user._id,
-            comment:data.comment,
-            })
+            else{
+                synergy.comments.push({
+                    id:req.user._id,
+                    name:req.user.name,
+                    url:req.user.url,
+                    comment:data.comment,
+                    })
+                }
 
             const updatedSynergy=await synergy.save();
 
