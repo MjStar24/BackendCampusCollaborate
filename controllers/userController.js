@@ -149,6 +149,7 @@ class userController{
     }
 
     async addCourses(req,res){
+        const data=req.body;
         if(!data.courses) res.sendStatus(400);
         try{
             const user=await User.findById(req.user._id);
