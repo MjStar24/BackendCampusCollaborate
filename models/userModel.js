@@ -9,6 +9,7 @@ const UserSchema=new mongoose.Schema({
     projects:[{type:Schema.Types.ObjectId,ref:"Project"}],
     email:{type:String,required:true,},
     courses:[{type:String}],
+    starBy:[{type:Schema.Types.ObjectId,ref:"Project"}],
     url:{type:String}
 })
 

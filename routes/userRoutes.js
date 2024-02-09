@@ -15,5 +15,6 @@ router.post("/changeDp",[upload.single('image'),authMiddleWare.isAuthenticated],
 router.post("/addSkills",authMiddleWare.isAuthenticated,userController.addSkills);
 router.post("/addProject",authMiddleWare.isAuthenticated,userController.addProject);
 router.post("/addCourses",authMiddleWare.isAuthenticated,userController.addCourses);
+router.post("/addStarBy",authMiddleWare.isAuthenticated,userController.addStarBy);
 
 export default router;

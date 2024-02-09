@@ -46,6 +46,9 @@ class userController{
                 const user=await User.findById(id).select("-_id -__v").populate({
                     path:"projects",
                     select:"-id -__v"
+                }).populate({
+                    path:"starBy",
+                    select:"-__v -_id"
                 });
                 if(!user) res.sendStatus(404);
                 else res.status(200).json(user);
@@ -144,6 +147,21 @@ class userController{
             res.json(updatedUser);
         }catch(e){
             console.log(e.message);
+            res.sendStatus(500);
+        }
+    }
+
+    async addStarBy(req,res){
+        const {id}=req.body;
+        if(!id) res.sendStatus(400);
+
+        try{
+            const user=await User.findById(req.user._id);
+            user.starBy.push(id);
+            const updatedUser=await user.save();
+            res.status(200).json(updatedUser);
+        }catch(e){
+            console.log(e);
             res.sendStatus(500);
         }
     }
