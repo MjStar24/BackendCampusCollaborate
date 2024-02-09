@@ -1,19 +1,14 @@
 import Project from "../models/projectModel.js";
-import User from "../models/userModel.js";
 import imageService from "../services/uploadImage.js";
+import { v2 as cloudinary } from "cloudinary";
 
-import { v2 as cloudinary } from 'cloudinary';
-import Cloudinary from "../services/uploadFile.js"
-Cloudinary.cloudinaryConnect();
-
-function isFileTypeSupported(type,supported){
-    return supported.includes(type);
-}
-
-async function uploadFileToCloudinary (file,folder) {
-    const option = {folder};
-    return await cloudinary.uploader.upload(file.tempFilePath,option);
-}
+cloudinary.config({
+    
+    cloud_name:process.env.CLOUD_NAME,
+    api_key:process.env.API_KEY,
+    api_secret:process.env.API_SECRET,
+    
+})
 
 class projectController{
 
@@ -110,26 +105,30 @@ class projectController{
 
     async addDocs(req,res){
         console.log(req.files);
-        const supportedTypes = ["pdf","docx"];
+        const data=JSON.parse(JSON.stringify(req.body))
+        const {id}=data;
         try{
-            for(const data of req.files){
-                
-                    const file=data.buffer;
-                    const fileType = data.originalname.split('.')[1].toLowerCase();
-                    if(!isFileTypeSupported(fileType,supportedTypes)){
-                        return res.json({
-                            success:false,
-                            message:'file format not matched',
-                        })
-                    }
-                    const document = await uploadFileToCloudinary(file,"kriti");
-                    console.log(document);
+            const project=await Project.findById(id);
+
+            if(!project) res.sendStatus(400);
+            else{
+                for(const file of req.files){
+                    const b64 = Buffer.from(file.buffer).toString("base64");
+                    let dataURI = "data:" + file.mimetype + ";base64," + b64;
+                    const res = await cloudinary.uploader.upload(dataURI, {
+                        resource_type: "auto",
+                });
+                project.docs.push(res.secure_url);
+                    
                 }
-                res.sendStatus(200);
+                const updatedProject=await project.save();
+                res.status(200).json(updatedProject);
+            }
             }
             
         catch(e){
             console.log(e);
+            res.sendStatus(500);
         }
     }
 

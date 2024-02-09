@@ -8,7 +8,7 @@ const UserSchema=new mongoose.Schema({
     skills:[{type:String}],
     projects:[{type:Schema.Types.ObjectId,ref:"Project"}],
     email:{type:String,required:true,},
-    courses:[{type:Schema.Types.ObjectId,ref:"CourseReview"}],
+    courses:[{type:String}],
     url:{type:String}
 })
 
