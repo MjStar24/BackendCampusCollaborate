@@ -13,6 +13,7 @@ import projectRoutes from "./routes/projectRoutes.js"
 import synergyRoutes from "./routes/synergyRoutes.js";
 import CourseReviewRoutes from "./routes/courseReviewRoutes.js";
 
+
 DbConnect();
 
 const app=express();

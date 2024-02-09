@@ -12,12 +12,14 @@ const projectSchema=new mongoose.Schema({
     projectName:{type:String,required:true},
     description:{type:String,default:""},
     skills:[{type:String}],
+    thumbnail:{type:String},
     urls:[{type:String}],
     duration:{type:String,required:true},
     isActive:{type:Boolean,default:true},
     owner:{type:Schema.Types.ObjectId,ref:"User"},
     admin:[adminModel],
-    starBy:[{type:Schema.Types.ObjectId,ref:"User"}]
+    starBy:[{type:Schema.Types.ObjectId,ref:"User"}],
+    docs:[{type:String}]
 }) 
 
 const Project=mongoose.model("Project",projectSchema);

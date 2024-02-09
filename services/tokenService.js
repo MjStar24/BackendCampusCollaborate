@@ -3,7 +3,7 @@ const secret=process.env.ACCESS_TOKEN_SECRET
 class tokenService{
     genrateToken(payload){
         return jwt.sign(payload,secret,{
-            expiresIn:"1h"
+            expiresIn:"3d"
         });
     }
 

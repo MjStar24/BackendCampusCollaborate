@@ -7,6 +7,7 @@ const storage=multer.memoryStorage();
 const upload =multer();
 const router=Router();
 
+router.get("/searchSynergy/:name",authMiddleWare.isAuthenticated,synergyController.searchSynergy)
 router.get("/getById",authMiddleWare.isAuthenticated,synergyController.getSynergyById)
 router.get("/getAllSynergy",authMiddleWare.isAuthenticated,synergyController.getSynergy);
 router.post("/create",[upload.array('images',5),authMiddleWare.isAuthenticated],synergyController.createSynergy);

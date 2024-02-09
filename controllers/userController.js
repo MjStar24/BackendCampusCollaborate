@@ -2,6 +2,7 @@ import User from "../models/userModel.js";
 import Project from "../models/projectModel.js";
 import CourseReview from "../models/courseReviewModel.js";
 import imageService from "../services/uploadImage.js";
+import tokenService from "../services/tokenService.js";
 
 class userController{
     /**
@@ -30,12 +31,25 @@ class userController{
         const {id}=req.body;
         try{
             if(id){
-                const user=await User.findOne({_id:id});
+                const user=await User.findOne({_id:id}).select("-_id -__v").populate({
+                    path:"projects",
+                    select:"-_id -__v"
+                });
                 if(!user) res.sendStatus(404).json({message:"User not found"})
                 else res.json(user);
             }
             else{
-                res.status(200).json(req.user);
+                const {accessToken}=req.cookies;
+                if(!accessToken) res.status(401).json({message:"Access denied no token"});
+                const {id}=tokenService.verifyToken(accessToken);
+                if(!id) res.status(401).json({message:"Access denied"});
+                const user=await User.findById(id).select("-_id -__v").populate({
+                    path:"projects",
+                    select:"-id -__v"
+                });
+                if(!user) res.sendStatus(404);
+                else res.status(200).json(user);
+
             }
         }catch(e){
             console.log(e);
@@ -101,12 +115,14 @@ class userController{
         try{
             const user=await User.findById(req.user._id);
             if(!user) res.status(404).json({"message":"User not found"})
-            data.skills.forEach(element => {
-                const found=user.skills.find(elem=>elem===element);
-                if(!found) user.skills.push(element);
-            });
-            const updatedUser=await user.save();
-            res.json(updatedUser);
+            else {
+                data.skills.forEach(element => {
+                    const found=user.skills.find(elem=>elem===element);
+                    if(!found) user.skills.push(element);
+                });
+                const updatedUser=await user.save();
+                res.json(updatedUser);
+            }
         }catch(e){
             console.log(e.message);
             res.sendStatus(500);

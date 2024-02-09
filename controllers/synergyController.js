@@ -2,6 +2,21 @@ import imageService from "../services/uploadImage.js";
 import Synergy from "../models/synergyModel.js";
 class synergyController{
 
+    async searchSynergy(req,res){
+        const name=req.params.name;
+            if(!name) res.sendStatus(400);
+            try{
+                const synergy=await Synergy.findOne({
+                    title:{$regex : name , $options : "i"}
+                }).select("-_id -__v")
+                if(!synergy) res.sendStatus(404);
+                else res.status(200).json(synergy);
+            }catch(e){
+                console.log(e);
+                res.sendStatus(500);
+        }
+    }
+
     async getSynergyById(req,res){
         const {id}=req.body;
         if(!id) res.sendStatus(400);
@@ -86,9 +101,6 @@ class synergyController{
 
     async addDomains(req,res){
         const data=req.body;
-        console.log(req.user._id);
-        console.log(data.id);
-        console.log(data.domains);
         if(!data.domains || !data.id) res.sendStatus(400).json({message:"domains field is missing"})
         try{
             const synergy=await Synergy.findOne({_id:data.id,user:req.user._id});

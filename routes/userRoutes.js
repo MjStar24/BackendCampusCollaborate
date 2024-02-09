@@ -8,6 +8,7 @@ const router=Router();
 const storage=multer.memoryStorage();
 const upload =multer();
 
+router.get("/searchUser/:name",authMiddleWare.isAuthenticated,userController.getUser);
 router.get("/userById",authMiddleWare.isAuthenticated,userController.getUserById);
 router.post("/addProfile",[upload.single('image'),authMiddleWare.isAuthenticated],userController.addProfile);
 router.post("/changeDp",authMiddleWare.isAuthenticated,userController.changeDp);
