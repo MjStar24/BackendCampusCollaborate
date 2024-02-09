@@ -11,7 +11,7 @@ const upload =multer({storage});
 router.get("/searchProjects/:name",authMiddleWare.isAuthenticated,projectController.searchProjects);
 router.get("/getProject",authMiddleWare.isAuthenticated,projectController.getProject);
 router.get("/getAllProject",authMiddleWare.isAuthenticated,projectController.getAllProjects);
-router.post("/create",[upload.single('thumbnail'),authMiddleWare.isAuthenticated],projectController.createProject);
+router.post("/create",[authMiddleWare.isAuthenticated],projectController.createProject);
 router.post("/addSkills",authMiddleWare.isAuthenticated,projectController.addSkills);
 router.post("/addUrls",authMiddleWare.isAuthenticated,projectController.addUrl);
 router.post("/addAdmin",authMiddleWare.isAuthenticated,projectController.addAdmin);

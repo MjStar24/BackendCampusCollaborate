@@ -78,13 +78,10 @@ class projectController{
 
 
     async createProject(req,res){
-        console.log(req.file)
         const data=req.body;
         if(!data.projectName && !data.duration) res.sendStatus(400);
         try{
-            const thumbNail=req.file.buffer;
-            const filename=req.file.originalname;
-            const uploadedImage=await imageService.uploadImage(thumbNail,filename);
+            
             const projectData={
                 projectName:data.projectName,
                 description:data.description,
@@ -93,7 +90,6 @@ class projectController{
                 isActive:data.isActive,
                 owner:req.user._id,
                 duration:data.duration,
-                thumbnail:uploadedImage.url,
                 admin:data.admin,
             }
 
