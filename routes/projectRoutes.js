@@ -15,7 +15,7 @@ router.post("/create",[upload.single('thumbnail'),authMiddleWare.isAuthenticated
 router.post("/addSkills",authMiddleWare.isAuthenticated,projectController.addSkills);
 router.post("/addUrls",authMiddleWare.isAuthenticated,projectController.addUrl);
 router.post("/addAdmin",authMiddleWare.isAuthenticated,projectController.addAdmin);
-router.post("/addThumbnail",[upload.single('image'),authMiddleWare.isAuthenticated],projectController.addThumbnail);
+router.post("/addThumbnail",[upload.single('thumbnail'),authMiddleWare.isAuthenticated],projectController.addThumbnail);
 router.post("/addStarBy",authMiddleWare.isAuthenticated,projectController.addSatrBy);
 router.post("/addDocs",[upload.array("docs",5),authMiddleWare.isAuthenticated],projectController.addDocs);
 
