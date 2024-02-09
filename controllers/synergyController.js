@@ -25,30 +25,30 @@ class synergyController{
         }
     }
 
+// working fine
     async createSynergy(req,res){
         let urls=[];
         const data=req.body;
 
         try{
-            if(!data.title || !data.description || !data.domains) res.sendStatus(400);
-            for(const file of req.files){
-                const url=file.buffer;
-                const filename=file.originalname;
-                const uploadedImage=await imageService.uploadImage(url,filename);
-                urls.push(uploadedImage.url);
-            }
-
+            if(!data.title || !data.description || !data.domains) return res.sendStatus(400);
+            // for(const file of req.files){
+            //     const url=file.buffer;
+            //     const filename=file.originalname;
+            //     const uploadedImage=await imageService.uploadImage(url,filename);
+            //     urls.push(uploadedImage.url);
+            // }
+            console.log("here");
             const synergy=new Synergy({
-                user:req.user._id,
+                // user:req.user._id,
                 title:data.title,
                 description:data.description,
-                image:urls,
+                // image:urls,
                 domains:data.domains,
             })
 
             const updatedSynergy=await synergy.save();
             
-
             res.status(200).json(updatedSynergy);
         }catch(e){
             console.log(e);
@@ -64,7 +64,7 @@ class synergyController{
             const synergy = await Synergy.findById(data.id);
             if(!synergy) res.sendStatus(404).json({message : "not found"})
             synergy.comments.push({
-            user:req.user._id,
+            // user:req.user._id,
             comment:data.comment,
             })
 
@@ -72,7 +72,7 @@ class synergyController{
 
             res.status(200).json(updatedSynergy);
         }catch(e){
-            console.log(e);
+            console.log(e.message);
             res.sendStatus(500);
         }
 

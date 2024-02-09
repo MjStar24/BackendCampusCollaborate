@@ -42,7 +42,7 @@ class projectController{
                 description:data.description,
                 skills:data.skills,
                 urls:data.urls,
-                owner:req.user._id,
+                // owner:req.user._id,
                 duration:data.duration,
                 documentUrl:response.secure_url,
             }

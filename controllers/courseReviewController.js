@@ -26,7 +26,7 @@ class courseReviewController{
 
     async addComments(req,res){
         const data=req.body
-        if (!data.id || !data.comments ) res.sendStatus(400);
+        if (!data.id || !data.comment ) res.sendStatus(400);
         try {
             const courseReview = await courseReviewModel.findById(data.id);
             if (!courseReview )res.sendStatus(404).json({"errorMessage":"Course Review doesn't exist"})
@@ -35,7 +35,7 @@ class courseReviewController{
                 comment:data.comment
             })
             const updatedCourseReview=await courseReview.save();
-            res.json(updatedCourseReview);
+            return res.json(updatedCourseReview);
         } catch (error) {
             console.log(error.message);
             res.sendStatus(500);
