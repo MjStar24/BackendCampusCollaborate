@@ -149,17 +149,20 @@ class userController{
     }
 
     async addCourses(req,res){
-        const data=req.body;
-        if(!data.courseId) res.sendStatus(400);
+        if(!data.courses) res.sendStatus(400);
         try{
-            const course=await CourseReview.findById(data.courseId);
-            const getUser=await User.findById(req.user._id);
-            if(!course) res.status(401).json({message:"course Not found"})
+            const user=await User.findById(req.user._id);
+            if(!user) res.status(404).json({"message":"User not found"})
+            else {
+                data.courses.forEach(element => {
+                    const found=user.courses.find(elem=>elem===element);
+                    if(!found) user.courses.push(element);
+                });
+                const updatedUser=await user.save();
+                res.json(updatedUser);
+            }
 
-            const found = getUser.courses.find(element=>element===data.courseId);
-            if(!found) getUser.courses.push(data.courseId);
-            const updatedUser=await getUser.save();
-            res.json(updatedUser);
+            
         }catch(e){
             console.log(e.message);
             res.sendStatus(500);
