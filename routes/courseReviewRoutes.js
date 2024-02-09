@@ -1,7 +1,7 @@
 import { Router } from "express";
 import authMiddleWare from "../middleware/authMiddleWare.js";
 import courseReviewController from "../controllers/courseReviewController.js";
-import spamMiddleWare from "../middleware/spamMiddleware.js";
+// import spamMiddleWare from "../middleware/spamMiddleware.js";
 
 const router=Router();
 

@@ -2,7 +2,7 @@ import { Router} from "express";
 import multer from "multer";
 import synergyController from "../controllers/synergyController.js";
 import authMiddleWare from "../middleware/authMiddleWare.js";
-import spamMiddleWare from "../middleware/spamMiddleware.js";
+// import spamMiddleWare from "../middleware/spamMiddleware.js";
 
 const storage=multer.memoryStorage();
 const upload =multer();
