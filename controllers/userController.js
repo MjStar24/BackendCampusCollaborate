@@ -100,7 +100,7 @@ class userController{
             user.url=uploadedImage.url;
 
             const updatedUser=await user.save();
-            res.stauts(200).json(updatedUser);
+            res.status(200).json(updatedUser);
             
         }catch(e){
             console.log(e);
