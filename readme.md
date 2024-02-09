@@ -1,3 +1,55 @@
+
+
+# Campus Collaborate
+
+A brief description of what this project does and who it's for
+
+## 1.Fork this repository
+OR
+
+On GitHub.com navigate to the https://github.com/MjStar24/BackendCampusCollaborate.git
+
+In the top-right corner of the page ,Click FORK.
+
+## 2. Clone the forked repository
+
+On GitHub.com , navigate to your fork of the repository.
+
+Above the list of files click <>Code .Copy the url mentioned . Go to the location where you want the cloned directory.
+
+In the terminal Type - git clone , and then paste URL you copied earlier . It will look like this , with your GitHub username instead of YOUR-USERNAME:
+
+git clone https://github.com/YOUR-USERNAME/BackendCampusCollaborate.git
+
+Press Enter. Your local clone will be created.
+
+## Steps to Set up Backend
+
+* Move to backend folder - cd backend
+* Install the required nodes modules package - npm i
+* Create a.env file as follows with the required APIs- MongoDB,Cloudinary, OpenAI
+
+CLIENT_ID =
+CLIENT_SECRET =
+TENENT ID =
+ACCESS_TOKEN_SECRET =
+DB_URL =
+PORT =
+IMAGEKIT_PUBLIC_KEY =
+IMAGEKIT_PRIVATE_KEY =
+IMAGEKIT_URL_ENDPOINT =
+CLOUD_NAME =
+API_KEY =
+API_SECRET =
+
+## Steps to run App
+
+* Move to app folder - cd app
+* Run flutter pub get to get the dependencies
+* Run flutter run
+
+## Directory Structure
+
 ## API Reference
 
 #### 
