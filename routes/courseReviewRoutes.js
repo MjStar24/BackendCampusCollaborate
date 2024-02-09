@@ -9,6 +9,6 @@ router.get("/searchCourse/:name",authMiddleWare.isAuthenticated,courseReviewCont
 router.get("/getCourse",authMiddleWare.isAuthenticated,courseReviewController.getCouseById);
 router.get("/getAllCourses",authMiddleWare.isAuthenticated,courseReviewController.getReviews);
 router.post("/create",[authMiddleWare.isAuthenticated],courseReviewController.addCourseReview);
-router.post("/addComments",[spamMiddleWare.isReviewCommentSpam,authMiddleWare.isAuthenticated],courseReviewController.addComments);
+router.post("/addComments",[authMiddleWare.isAuthenticated],courseReviewController.addComments);
 
 export default router;
