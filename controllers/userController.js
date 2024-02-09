@@ -92,7 +92,7 @@ class userController{
     async changeDp(req,res){
         if(!req.file) res.status(500).json({message:"please provide image"});
         try{
-            const user=User.findById(req.user._id);
+            const user=await User.findById(req.user._id);
             if(!user) res.status(404).json({message:"user not found"})
             const url=req.file.buffer;
             const filename=req.file.originalname;
