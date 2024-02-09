@@ -7,7 +7,7 @@ class authMiddleWare{
             if(!accessToken) res.status(401).json({message:"Access denied no token"});
             const {id}=tokenService.verifyToken(accessToken);
             if(!id) res.status(401).json({message:"Access denied"});
-            const user=await User.findById(id).select("-_id -__v");
+            const user=await User.findById(id).select("-__v");
             req.user=user;
             next();
         }catch(e){
