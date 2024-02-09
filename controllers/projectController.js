@@ -1,4 +1,5 @@
 import Project from "../models/projectModel.js";
+import User from "../models/userModel.js";
 import imageService from "../services/uploadImage.js";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -81,7 +82,7 @@ class projectController{
         const data=req.body;
         if(!data.projectName && !data.duration) res.sendStatus(400);
         try{
-            
+            const user = await User.findById(req.user._id);
             const projectData={
                 projectName:data.projectName,
                 description:data.description,
@@ -94,6 +95,8 @@ class projectController{
             }
 
             const project = new Project(projectData);
+            user.projects.push(project._id);
+            const updatedUser=await user.save();
             const newProject = await project.save();
 
             res.json(newProject);
