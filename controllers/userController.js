@@ -37,6 +37,9 @@ class userController{
                 const user=await User.findOne({_id:id}).select("-_id -__v").populate({
                     path:"projects",
                     select:"-_id -__v"
+                }).populate({
+                    path:"starBy",
+                    select:"-__v"
                 });
                 if(!user) res.sendStatus(404).json({message:"User not found"})
                 else res.json(user);
