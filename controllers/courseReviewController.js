@@ -8,7 +8,7 @@ class courseReviewController{
         const name=req.params.name;
             if(!name) res.sendStatus(400);
             try{
-                const course=await courseReviewModel.findOne({
+                const course=await courseReviewModel.find({
                     $or:[
                         {courseName:{$regex : name , $options : "i"}},
                     ]
@@ -25,7 +25,7 @@ class courseReviewController{
         const {id}=req.body;
         if(!id) res.sendStatus(400);
         try{
-            const course=await courseReviewModel.findById(id).select("-_id -__v");
+            const course=await courseReviewModel.findById(id).select("-__v");
             if(!course) res.sendStatus(404);
             res.status(200).json(course);
         }catch(e){
@@ -50,9 +50,16 @@ class courseReviewController{
     async addCourseReview(req,res){
         const data =req.body;
         if (!data.courseName && !data.title) res.sendStatus(400)
+        console.log(req.user);
         try {
         const courseReviewData={
-            postedBy:req.user._id,
+            postedBy:{
+                id:req.user._id,
+                name:req.user.name,
+                rollNumber:req.user.rollNumber,
+                url:req.user.url?req.user.url:"",
+                program:req.user.program
+            },
             courseName:data.courseName,
             professor:data.professor,
             description:data.description,

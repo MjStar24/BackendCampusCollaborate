@@ -15,7 +15,7 @@ class userController{
         const name=req.params.name;
         if(!name) res.sendStatus(400);
         try{
-            const user=await User.findOne({
+            const user=await User.find({
                 name:{$regex : name , $options : "i"}
             }).select("name url program _id")
             if(!user) res.sendStatus(404);

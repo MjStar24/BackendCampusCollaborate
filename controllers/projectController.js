@@ -18,9 +18,9 @@ class projectController{
         const name=req.params.name;
             if(!name) res.sendStatus(400);
             try{
-                const project=await Project.findOne({
+                const project=await Project.find({
                     projectName:{$regex : name , $options : "i"}
-                }).select("-_id -__v")
+                }).select("-__v")
                 if(!project) res.sendStatus(404);
                 else res.status(200).json(project);
             }catch(e){
@@ -32,7 +32,7 @@ class projectController{
     async getProject(req,res){
         const {id}=req.body;
         try{
-            const project=await Project.findById(id).select("-_id -__v");
+            const project=await Project.findById(id).select("-__v");
             if(!project) res.sendStatus(404);
             res.json(project);
         }catch(e){
@@ -43,7 +43,7 @@ class projectController{
 
     async getAllProjects(req,res){
         try{
-            const projects=await Project.find({}).select("-_id -__v");
+            const projects=await Project.find({}).select("-__v");
             if(!projects) res.sendStatus(404);
             res.json(projects);
         }catch(e){
