@@ -157,16 +157,24 @@ class userController{
     async addStarBy(req,res){
         const {id}=req.body;
         if(!id) res.sendStatus(400);
-
+        console.log(id)
         try{
             const user=await User.findById(req.user._id);
-            user.starBy.push(id);
-            const updatedUser=await user.save();
-            const populated=await updatedUser.populate({
+            console.log("user",user.starBy);
+            const found = user.starBy.find(elem => elem.toString() === id);
+            console.log("found",found);
+            if(!found){
+                user.starBy.push(id);
+                const updatedUser=await user.save();
+                const populated=await updatedUser.populate({
                 path:"starBy",
                 select:"-__v"
             })
-            res.status(200).json(populated);
+            res.status(200).json({message:true});
+            
+            }
+            else res.status(400).json({message:"project already stared"});
+            
         }catch(e){
             console.log(e);
             res.sendStatus(500);
