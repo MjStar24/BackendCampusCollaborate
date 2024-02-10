@@ -41,6 +41,8 @@ IMAGEKIT_URL_ENDPOINT =
 CLOUD_NAME =
 API_KEY =
 API_SECRET =
+DISCOVERY_URL=
+GOOGLE_API_KEY=
 
 ## Steps to run App
 
@@ -48,7 +50,7 @@ API_SECRET =
 * Run flutter pub get to get the dependencies
 * Run flutter run
 
-## Directory Structure
+
 
 ## API Reference
 
@@ -136,6 +138,14 @@ http
 | Parameter | Type     |    
 | :-------- | :------- | 
 | projectId      | `ObjectId of the project ` | 
+
+http
+  POST /project/addThumbnail
+
+| Parameter | Type     |    
+| :-------- | :------- | 
+| projectId      | `ObjectId of the project ` | 
+
 
 ## User Routes
 
@@ -266,4 +276,11 @@ http
 | :-------- | :------- | 
 | id | `synergy Id`|
 |Domains|`Array of Domains` | 
+
+  POST /synergy/addImages
+
+| Parameter | Type     |    
+| :-------- | :------- | 
+| id | `synergy Id`|
+|Images|`Array of Images` | 
  
