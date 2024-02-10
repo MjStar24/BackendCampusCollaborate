@@ -125,8 +125,10 @@ class synergyController{
         const data=req.body;
         if(!data.domains || !data.id) res.sendStatus(400).json({message:"domains field is missing"})
         try{
-            const synergy=await Synergy.findOne({_id:data.id,user:req.user._id});
-            if(!synergy) res.status(404).json({"message":"not found"})
+            const synergy=await Synergy.findOne({
+                _id:data.id,
+            });
+            if(!synergy) res.status(404).json({message:"not found"})
             data.domains.forEach(element => {
                 const found=synergy.domains.find(elem=>elem===element);
                 if(!found) synergy.domains.push(element);
