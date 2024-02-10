@@ -291,4 +291,9 @@ Outlook login handler
 | :-------- | :------- | 
 | id | `synergy Id`|
 |Images|`Array of Images` | 
- 
+
+
+
+
+
+
