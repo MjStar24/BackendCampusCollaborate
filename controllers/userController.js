@@ -162,7 +162,11 @@ class userController{
             const user=await User.findById(req.user._id);
             user.starBy.push(id);
             const updatedUser=await user.save();
-            res.status(200).json(updatedUser);
+            const populated=await updatedUser.populate({
+                path:"starBy",
+                select:"-__v"
+            })
+            res.status(200).json(populated);
         }catch(e){
             console.log(e);
             res.sendStatus(500);
