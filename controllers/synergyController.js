@@ -53,7 +53,9 @@ class synergyController{
                 user:{
                     id:req.user._id,
                     name:req.user.name,
-                    url:req.user.url
+                    url:req.user.url,
+                    rollNumber:req.user.rollNumber,
+                    program:req.user.program
                 },
                 title:data.title,
                 description:data.description,
