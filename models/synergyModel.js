@@ -8,8 +8,16 @@ const commentsModel=new mongoose.Schema({
     comment:{type:String}
 },{_id:false})
 
+const userModel=new mongoose.Schema({
+    id:{type:Schema.Types.ObjectId,ref:"User"},
+    name:{type:String},
+    url:{type:String},
+    program:{type:String},
+    rollNumber:{type:String}
+},{_id:false})
+
 const synergySchema=new mongoose.Schema({
-    user:commentsModel,
+    user:userModel,
     title:{type:String,required:true},
     images:[{type:String}],
     description:{type:String,default:""},
