@@ -17,7 +17,7 @@ const postedByModel=new mongoose.Schema({
 },{_id:false})
 
 const courseReviewSchema=new mongoose.Schema({
-    postedBy:postedByModel,
+    user:postedByModel,
     courseName:{type:String,requied:true},
     title:{type:String,requied:true},
     professor:{type:String,required:true},
