@@ -53,7 +53,7 @@ class courseReviewController{
         console.log(req.user);
         try {
         const courseReviewData={
-            postedBy:{
+            user:{
                 id:req.user._id,
                 name:req.user.name,
                 rollNumber:req.user.rollNumber,
