@@ -36,7 +36,7 @@ class userController{
             if(id){
                 const user=await User.findOne({_id:id}).select("-_id -__v").populate({
                     path:"projects",
-                    select:"-_id -__v"
+                    select:"-__v"
                 }).populate({
                     path:"starBy",
                     select:"-__v"
@@ -51,10 +51,10 @@ class userController{
                 if(!id) res.status(401).json({message:"Access denied"});
                 const user=await User.findById(id).select("-_id -__v").populate({
                     path:"projects",
-                    select:"-id -__v"
+                    select:"-__v"
                 }).populate({
                     path:"starBy",
-                    select:"-__v -_id"
+                    select:"-__v"
                 });
                 if(!user) res.sendStatus(404);
                 else res.status(200).json(user);
