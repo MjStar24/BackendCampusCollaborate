@@ -41,6 +41,8 @@ IMAGEKIT_URL_ENDPOINT =
 CLOUD_NAME =
 API_KEY =
 API_SECRET =
+DISCOVERY_URL=
+GOOGLE_API_KEY=
 
 ## Steps to run App
 
@@ -48,13 +50,22 @@ API_SECRET =
 * Run flutter pub get to get the dependencies
 * Run flutter run
 
-## Directory Structure
+
 
 ## API Reference
 
 #### 
+
+## Auth Routes
+
+GET /auth/getCred
+
+Outlook login handler
+
+
+
 ## Project Routes
-http
+
   GET /project/searchProjects/:name
 
 
@@ -62,9 +73,9 @@ http
 | :-------- | :------- | :------------------------- |
 |   Name  | Object |  Fetching the projects by name|
 
-#### 
 
-http
+
+
   GET /project/getProjects
 
 
@@ -74,14 +85,13 @@ http
 
 
 
-http
   GET /project/getAllProjects
 
 
 
 
 
-http
+
   POST /project/create
 
 
@@ -98,7 +108,7 @@ http
 | admin      | object |  
 
 
-http
+
   POST /project/addSkills 
 
 | Parameter | Type     |                   
@@ -107,7 +117,7 @@ http
 | skills      | [skills] |  
 
 
-http
+
   POST /project/addUrls
 
 | Parameter | Type     |                   
@@ -115,14 +125,14 @@ http
 | id      | `ObjectId of the project ` |  
 | Urls      | [Urls] |  
 
-http
+
   POST /project/addAdmin
 
 | Parameter | Type     |    
 | :-------- | :------- | 
 | projectId      | `ObjectId of the project ` |  
 
-http
+
   POST /project/addStarBy
 
 | Parameter | Type     |    
@@ -130,37 +140,45 @@ http
 | projectId      | `ObjectId of the project ` |  
 
 
-http
+
   POST /project/addDocs
 
 | Parameter | Type     |    
 | :-------- | :------- | 
 | projectId      | `ObjectId of the project ` | 
 
+
+  POST /project/addThumbnail
+
+| Parameter | Type     |    
+| :-------- | :------- | 
+| projectId      | `ObjectId of the project ` | 
+
+
 ## User Routes
 
-http
+
   GET /user/searchUser/:name
 
 | Parameter | Type     |    
 | :-------- | :------- | 
 | Name      | `String ` |  
 
-http
+
   GET /user/userById
 
 | Parameter | Type     |    
 | :-------- | :------- | 
 | id      | `ObjectId of the User ` | 
 
-http
+
   POST /user/addStarBy
 
 | Parameter | Type     |    
 | :-------- | :------- | 
 | userId      | `ObjectId of the user ` |  
 
-http
+
   POST /user/addProfile
 
 | Parameter | Type     |    
@@ -169,25 +187,25 @@ http
 | courses     | `Array of String` | 
 |Image        |        `photo` |
 
-http
+
   POST /user/changeDp
 | Parameter | Type     |    
 | :-------- | :------- | 
 | Image      | `photo` | 
 
-http
+
   POST /user/addSkills
 | Parameter | Type     |    
 | :-------- | :------- | 
 | skills      | `Array of String` | 
 
-http
+
   POST /user/addProject
 | Parameter | Type     |    
 | :-------- | :------- | 
 | projectId | `ObjectId of the project ` | 
 
-http
+
   POST /user/addCourses
 | Parameter | Type     |    
 | :-------- | :------- | 
@@ -195,22 +213,22 @@ http
 
 ## courseReview Routes
 
-http
+
   GET /courseReview/searchCourse/:name
 | Parameter | Type     |    
 | :-------- | :------- | 
 | Name      | `String` | 
 
-http
+
   GET /courseReview/getCourse
 | Parameter | Type     |    
 | :-------- | :------- | 
 | id      | `ObjectId of the courseReviewModel` | 
 
-http
+
   GET /courseReview/getAllCourses
 
-http
+
   POST /courseReview/create
 | Parameter | Type     |    
 | :-------- | :------- | 
@@ -221,7 +239,7 @@ http
 | rating      | `Number` | 
 
 
-http
+
   POST /courseReview/addComments
 | Parameter | Type     |    
 | :-------- | :------- | 
@@ -229,22 +247,22 @@ http
 | comment      | `String` | 
 
 ## Synergy Routes
-http
+
   GET /synergy/searchSynergy/:name
 | Parameter | Type     |    
 | :-------- | :------- | 
 | Name      | `String` | 
 
-http
+
   GET /synergy/getById
 | Parameter | Type     |    
 | :-------- | :------- | 
 | Id : `synergy id` | 
 
-http
+
   GET /synergy/getAllSynergy
 
-http
+
   POST /synergy/create
 | Parameter | Type     |    
 | :-------- | :------- | 
@@ -266,4 +284,11 @@ http
 | :-------- | :------- | 
 | id | `synergy Id`|
 |Domains|`Array of Domains` | 
+
+  POST /synergy/addImages
+
+| Parameter | Type     |    
+| :-------- | :------- | 
+| id | `synergy Id`|
+|Images|`Array of Images` | 
  
