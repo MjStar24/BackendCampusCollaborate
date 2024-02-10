@@ -16,7 +16,10 @@ class userController{
         if(!name) res.sendStatus(400);
         try{
             const user=await User.find({
-                name:{$regex : name , $options : "i"}
+                $and:[
+                    {name:{$regex : name , $options : "i"}},
+                    {email:{$ne:req.user.email}}
+                ]
             }).select("name url program _id")
             if(!user) res.sendStatus(404);
             else res.status(200).json(user);
