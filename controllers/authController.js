@@ -80,7 +80,8 @@ class AuthController{
             // res.redirect(`http://localhost:4000/?token=${token}&user=${existingUser}`)
         }catch(e){
             console.log(e);
-            res.sendStatus(500).json({message:"server error"});
+            if(!res.headersSent)
+                res.sendStatus(500).json({message:"server error"});
         }
         // console.log(userDetails);
 
