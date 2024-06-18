@@ -12,7 +12,7 @@ class authMiddleWare{
             next();
         }catch(e){
             console.log(e.message)
-            if(!res.headersSent)res.status(401).json({message:'Invalid Token'});
+            if(!res.headersSent) return res.status(401).json({message:'Invalid Token'});
         }
     }
 }
