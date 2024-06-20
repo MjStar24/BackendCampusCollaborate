@@ -52,14 +52,9 @@ class courseReviewController{
         if (!data.courseName && !data.title) res.sendStatus(400)
         console.log(req.user);
         try {
-        const courseReviewData={
-            user:{
-                id:req.user._id,
-                name:req.user.name,
-                rollNumber:req.user.rollNumber,
-                url:req.user.url?req.user.url:"",
-                program:req.user.program
-            },
+         const courseReviewData={
+            user:data.userName,
+            email:data.email,
             courseName:data.courseName,
             professor:data.professor,
             description:data.description,
