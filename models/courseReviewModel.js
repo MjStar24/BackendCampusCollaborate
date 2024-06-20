@@ -17,12 +17,13 @@ const postedByModel=new mongoose.Schema({
 },{_id:false})
 
 const courseReviewSchema=new mongoose.Schema({
-    user:postedByModel,
-    courseName:{type:String,requied:true},
-    title:{type:String,requied:true},
+    email:{type:String,required:true},
+    userName:{type:String,required:true},
+    courseName:{type:String,required:true},
+    title:{type:String,required:true},
     professor:{type:String,required:true},
     description:{type:String,default:""},
-    comments:[commentModel]
+    // comments:[commentModel]
 })
 
 const CourseReview=mongoose.model("CourseReview",courseReviewSchema);
