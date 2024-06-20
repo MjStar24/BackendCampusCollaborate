@@ -53,7 +53,7 @@ class courseReviewController{
         console.log(req.user);
         try {
          const courseReviewData={
-            user:data.userName,
+            userName:data.userName,
             email:data.email,
             courseName:data.courseName,
             professor:data.professor,
